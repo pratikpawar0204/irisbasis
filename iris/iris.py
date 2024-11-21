@@ -47,11 +47,13 @@ st.write(predicted_class)
 
 # Load and display the corresponding image
 if predicted_class == 'setosa':
-    image = Image.open('images\setosa.jpg')
+   image = Image.open("images/setosa.jpg")
 elif predicted_class == 'versicolor':
-    image = Image.open('images\versicolor.jpg')
+   image = Image.open("images/versicolor.jpg")
+
 else:
-    image = Image.open('images\virginica.jpg')
+   image = Image.open("images/virginica.jpg")
+
 
 st.image(image, caption=f'This is a {predicted_class} iris flower.', use_column_width=True)
 

@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
 from PIL import Image
+import os
 
 st.write("""
 # Simple Iris Flower Prediction App
@@ -45,17 +46,23 @@ st.subheader('Prediction')
 predicted_class = iris.target_names[prediction][0]
 st.write(predicted_class)
 
+# Dynamically construct the path to images folder
+current_dir = os.path.dirname(os.path.abspath(__file__))
+image_folder = os.path.join(current_dir, "images")
+
 # Load and display the corresponding image
 if predicted_class == 'setosa':
-   image = Image.open("images/setosa.jpg")
+    image_path = os.path.join(image_folder, 'setosa.jpg')
 elif predicted_class == 'versicolor':
-   image = Image.open("images/versicolor.jpg")
-
+    image_path = os.path.join(image_folder, 'versicolor.jpg')
 else:
-   image = Image.open("images/virginica.jpg")
+    image_path = os.path.join(image_folder, 'virginica.jpg')
 
-
-st.image(image, caption=f'This is a {predicted_class} iris flower.', use_column_width=True)
+try:
+    image = Image.open(image_path)
+    st.image(image, caption=f'This is a {predicted_class} iris flower.', use_column_width=True)
+except FileNotFoundError:
+    st.error(f"Image file not found at {image_path}. Please ensure the file exists.")
 
 st.subheader('Prediction Probability')
 st.write(prediction_proba)
